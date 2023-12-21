@@ -1,5 +1,5 @@
 ---
-import Layout from "../layouts/Layout.astro";
+import Card from "../components/Card.astro";
 ---
 
 <body>
@@ -14,9 +14,24 @@ import Layout from "../layouts/Layout.astro";
 <script>
   import { fetchFromFirestore } from "../lib/firestoreControls";
 
-  fetchFromFirestore("/content").then((returnedCollection) => {
-    const content: any[] = returnedCollection;
-  });
+  const ContentList: HTMLElement = document.querySelector("#ContentList")!;
+
+  interface ContentDocument {
+    id: string;
+    title: string;
+    content: string;
+    author?: string;
+    isLargeCard?: boolean;
+  }
+
+  fetchFromFirestore("/content").then(
+    (returnedCollection: ContentDocument[]) => {
+      returnedCollection.map((returnedDocument: ContentDocument) => {
+        ContentList.innerHTML =
+          ContentList.innerHTML + `<Card title=${returnedDocument.title} />`;
+      });
+    }
+  );
 </script>
 
 <style type="scss">
