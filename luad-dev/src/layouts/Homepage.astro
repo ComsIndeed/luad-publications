@@ -1,5 +1,5 @@
 ---
-
+import ContentList from "../components/ContentList";
 ---
 
 <body>
@@ -28,7 +28,7 @@
       });
   </script>
 
-  <!-- <style type="scss">
+  <style type="scss">
     .Header {
       width: 89%;
       padding: 5em 5%;
@@ -84,7 +84,7 @@
         filter: opacity(0);
       }
     }
-  </style> -->
+  </style>
 
   <!-- * -->
 
@@ -97,6 +97,10 @@
   <!-- * -->
 
   <div class="Content" id="ContentList">
+    <ContentList client:load />
+
+    <style type="scss"></style>
+
     <!-- <script>
       import { fetchFromFirestore } from "../lib/firestoreControls";
 
