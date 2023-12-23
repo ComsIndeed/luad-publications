@@ -8,7 +8,13 @@ import "animate.css";
 
   <div class="Header">
     <div class="defaultDisplay">
-      <img class="mainLogo" src="luad.webp" height="150" width="150" />
+      <img
+        class="mainLogo"
+        src="luad.webp"
+        alt="Luad Logo"
+        height="150"
+        width="150"
+      />
       <h1 class="mainTitle">LUAD</h1>
       <p class="mainSubtitle">
         The collection of Potterians' talents, one click at a time.
@@ -108,44 +114,43 @@ import "animate.css";
     }
   </style>
 
-  <!-- * -->
+  <!-- * NAVIGATION * -->
 
   <nav class="Navigation">
     <a href="/">Home</a>
     <a href="/about">About</a>
     <input type="search" />
+    <button class="RefreshButton">Refresh</button>
   </nav>
 
-  <!-- * -->
+  <script>
+    import { fetchFromFirestore } from "../lib/firestoreControls";
+    import { getHydratedCollection } from "../lib/hydration";
 
-  <div class="Content" id="ContentList">
-    <ContentList />
-
-    <style type="scss"></style>
-
-    <!-- <script>
-      import { fetchFromFirestore } from "../lib/firestoreControls";
-
-      const ContentList: HTMLElement = document.querySelector("#ContentList")!;
-
-      interface ContentDocument {
-        id: string;
-        title: string;
-        content: string;
-        author?: string;
-        isLargeCard?: boolean;
-      }
-
-      fetchFromFirestore("/content").then(
-        (returnedCollection: ContentDocument[]) => {
-          returnedCollection.map((returnedDocument: ContentDocument) => {
-            ContentList.innerHTML =
-              ContentList.innerHTML +
-              `<Card title=${returnedDocument.title} />`;
+    const RefreshButton = document.querySelector(".RefreshButton");
+    RefreshButton.addEventListener("click", () => {
+      fetchFromFirestore("/content", undefined, true, true).then(
+        (fetchedCollection) => {
+          document.querySelector(".ContentList").innerHTML = "";
+          getHydratedCollection(
+            "ContentCardTemplate",
+            fetchedCollection
+          ).forEach((hydratedHTMLElement) => {
+            document
+              .querySelector(".ContentList")
+              .appendChild(hydratedHTMLElement);
           });
         }
       );
-    </script> -->
+    });
+  </script>
+
+  <!-- * -->
+
+  <div class="Content">
+    <ContentList />
+
+    <style type="scss"></style>
   </div>
 
   <!-- * -->

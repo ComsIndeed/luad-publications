@@ -19,29 +19,17 @@
 
 <script>
   import { fetchFromFirestore } from "../lib/firestoreControls";
-
-  const ContentCardTemplate = document.getElementById(
-    "ContentCardTemplate"
-  ) as HTMLTemplateElement;
+  import { getHydratedCollection } from "../lib/hydration";
 
   fetchFromFirestore("/content", undefined, false, true).then(
     (fetchedCollection) => {
-      fetchedCollection.map((fetchedDocument) => {
-        let newClone = ContentCardTemplate.content.cloneNode(true) as Element;
-
-        newClone
-          .querySelector(".ContentCard")
-          .setAttribute("href", `/document?id=${fetchedDocument.id}`);
-
-        newClone.querySelector(".ContentCard-headerText").textContent =
-          fetchedDocument.title;
-
-        newClone
-          .querySelector(".ContentCard-headerImage")
-          .setAttribute("src", fetchedDocument.headerImage);
-
-        document.querySelector(".ContentList").appendChild(newClone);
-      });
+      getHydratedCollection("ContentCardTemplate", fetchedCollection).forEach(
+        (hydratedHTMLElement) => {
+          document
+            .querySelector(".ContentList")
+            .appendChild(hydratedHTMLElement);
+        }
+      );
     }
   );
 </script>
