@@ -1,9 +1,19 @@
 interface PostDocument {
   id: string;
-  title: string;
-  headerImage: string;
-  isLargeCard?: boolean;
-  author?: string;
+  head: {
+    title: string,
+    author: string
+    headerImage: {
+      large: string
+      medium: string
+      small: string
+      tiny: string
+      largeFullPath: string
+      mediumFullPath: string
+      smallFullPath: string
+      tinyFullPath: string
+    }
+  }
 }
 
 // Takes in the template and the data to hydrate it with,
@@ -39,21 +49,21 @@ export function getHydratedCollection(
 
       if (newClone.querySelector(".ContentCard-headerText")) {
         newClone.querySelector(".ContentCard-headerText")!.textContent =
-          passedDocument.title;
+          passedDocument?.head?.title;
       }
 
       if (newClone.querySelector(".ContentCard-headerImage")) {
         newClone
           .querySelector(".ContentCard-headerImage")!
-          .setAttribute("src", passedDocument.headerImage);
+          .setAttribute("src", passed document?.head?.headerImage?.small);
 
         newClone
           .querySelector(".ContentCard-headerImage")!
           .setAttribute(
             "alt",
             `Thumbnail for the article: ${
-              passedDocument.title
-                ? passedDocument.title
+              passedDocument?.head?.title
+                ? passedDocument?.head?.title
                 : "Document Title not found"
             } `
           );
