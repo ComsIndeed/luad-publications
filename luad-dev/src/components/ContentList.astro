@@ -21,7 +21,7 @@
   import { fetchFromFirestore } from "../lib/firestoreControls";
   import { getHydratedCollection } from "../lib/hydration";
 
-  fetchFromFirestore("/content", undefined, false, true).then(
+  fetchFromFirestore("/documents", undefined, false, true).then(
     (fetchedCollection) => {
       getHydratedCollection("ContentCardTemplate", fetchedCollection).forEach(
         (hydratedHTMLElement) => {
