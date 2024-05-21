@@ -1,0 +1,69 @@
+---
+import { collection, getDocs, getDoc, doc } from "firebase/firestore";
+import "../../main.sass";
+import { db } from "../../lib/firebase";
+import { createSafeRoute } from "../../lib/randomUtils";
+import { marked } from "marked";
+import { Image } from "astro:assets";
+import "animate.css";
+import { ViewTransitions } from "astro:transitions";
+import NotFoundImage from "../../Assets/notFound.webp";
+// import DOMPurify from "dompurify";
+
+export async function getStaticPaths() {
+  const retrievedData = await getDocs(collection(db, "documents"));
+  const fetchedDocuments = retrievedData.docs;
+
+  return fetchedDocuments.map((item) => {
+    return {
+      params: {
+        id: item.id,
+        title: createSafeRoute(item.data()?.head?.title),
+      },
+    };
+  });
+}
+
+const { id, title } = Astro.params;
+
+const currentDocumentSnapshot = await getDoc(doc(db, "documents/" + id));
+const currentDocument = currentDocumentSnapshot.data();
+
+const documentBody = currentDocument?.body;
+let documentBodyMarkdown;
+if (!!documentBody) {
+  documentBodyMarkdown = await marked.parse(documentBody);
+}
+// const markdown = DOMPurify.sanitize("<h1>Test</h1>");
+
+// document.getElementById("bodyText").innerHTML = documentBodyMarkdown;
+---
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="viewport" content="width=device-width" />
+    <meta name="generator" content={Astro.generator} />
+    <title>{currentDocument?.head?.title}</title>
+    <ViewTransitions />
+  </head>
+  <body class="light-theme">
+    <article class="DocumentPage">
+      <Image
+        alt="Header Image of the post"
+        src={!!currentDocument?.head?.headerImage?.small
+          ? currentDocument?.head?.headerImage?.small
+          : NotFoundImage}
+        width={768}
+        height={452}
+        transition:name={`HeaderImage_${id}`}
+      />
+      <h1>{currentDocument?.head?.title}</h1>
+      <p
+        id="bodyText"
+        set:html={!!documentBodyMarkdown ? documentBodyMarkdown : "No content"}
+      />
+    </article>
+  </body>
+</html>

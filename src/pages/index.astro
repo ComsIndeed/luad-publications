@@ -1,6 +1,8 @@
 ---
-import { header } from "../component/header";
-import "../main.css";
+import Header from "../components/header.astro";
+import ContentList from "../components/contentList.astro";
+import "../main.sass";
+import { ViewTransitions } from "astro:transitions";
 ---
 
 <html lang="en">
@@ -10,9 +12,12 @@ import "../main.css";
     <meta name="viewport" content="width=device-width" />
     <meta name="generator" content={Astro.generator} />
     <title>Luad Publications</title>
+    <ViewTransitions />
   </head>
-  <body>
-    <header></header>
-    <h1>Luad Publications</h1>
+  <body class="light-theme">
+    <div class="Homepage">
+      <Header />
+      <ContentList />
+    </div>
   </body>
 </html>

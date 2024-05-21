@@ -1,0 +1,36 @@
+---
+import Image from "astro/components/Image.astro";
+import LuadIcon from "../Assets/luad.webp";
+import HeaderImageSmall from "../Assets/header-small.webp";
+---
+
+<!-- For lazy loading header image --><!-- Make this have an expand thingy if possible -->
+<div
+  class="Header default"
+  id="Header"
+  style=`background-image: url(${HeaderImageSmall.src})`
+>
+  <div class="HeaderScreen_Main">
+    <Image class="Header-icon" src={LuadIcon} alt="Luad Icon" />
+    <h1
+      class="Header-title Header-title-luad animate__animated animate__fadeIn"
+    >
+      LUAD
+    </h1>
+
+    <p class="Header-subtitle">The Potterian's Talents, one click at a time</p>
+    <!-- <button id="LearnMoreButton"> Learn more </button> -->
+  </div>
+</div>
+
+<script>
+  import HeaderImage from "../Assets/header.webp";
+
+  const HeaderElement = document.getElementById("Header")!;
+
+  let HeaderImageElementLarge = new Image();
+  HeaderImageElementLarge.src = HeaderImage.src;
+  HeaderImageElementLarge.onload = () => {
+    HeaderElement.style.backgroundImage = `url(${HeaderImage.src})`;
+  };
+</script>
