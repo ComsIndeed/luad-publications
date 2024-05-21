@@ -9,6 +9,7 @@ import "animate.css";
 // import { ViewTransitions } from "astro:transitions";
 import NotFoundImage from "../../Assets/notFound.webp";
 // import DOMPurify from "dompurify";
+import { SEO } from "astro-seo";
 
 export async function getStaticPaths() {
   const retrievedData = await getDocs(collection(db, "documents"));
@@ -29,7 +30,7 @@ const { id } = Astro.params;
 const currentDocumentSnapshot = await getDoc(doc(db, "documents/" + id));
 const currentDocument = currentDocumentSnapshot.data();
 
-const documentBody = currentDocument?.body;
+const documentBody: string = currentDocument?.body;
 let documentBodyMarkdown;
 if (!!documentBody) {
   documentBodyMarkdown = await marked.parse(documentBody);
@@ -45,6 +46,29 @@ if (!!documentBody) {
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta name="viewport" content="width=device-width" />
     <meta name="generator" content={Astro.generator} />
+
+    <SEO
+      title={currentDocument?.head?.title + " | LUAD Publications"}
+      description={documentBody.slice(0, 64) + "..."}
+      openGraph={{
+        basic: {
+          title: currentDocument?.head?.title + " | LUAD Publications",
+          type: "article",
+          image: !!currentDocument?.head?.headerImage?.small
+            ? currentDocument?.head?.headerImage?.small
+            : NotFoundImage.src,
+        },
+        optional: {
+          description: documentBody.slice(0, 64) + "...",
+        },
+        article: {
+          authors: !!currentDocument?.head?.author
+            ? [currentDocument?.head?.author]
+            : undefined,
+        },
+      }}
+    />
+
     <title>{currentDocument?.head?.title}</title>
   </head>
   <body class="light-theme">

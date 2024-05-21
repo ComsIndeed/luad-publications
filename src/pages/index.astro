@@ -2,6 +2,8 @@
 import Header from "../components/header.astro";
 import ContentList from "../components/contentList.astro";
 import "../main.sass";
+import { SEO } from "astro-seo";
+import LUADIconSmall from "../Assets/luad-small.webp";
 ---
 
 <html lang="en">
@@ -10,6 +12,23 @@ import "../main.sass";
     <link rel="icon" href="/luad-small.webp" />
     <meta name="viewport" content="width=device-width" />
     <meta name="generator" content={Astro.generator} />
+
+    <SEO
+      title="LUAD Publications"
+      description="A place where Potterians' talents and knowledge are published"
+      openGraph={{
+        basic: {
+          title: "LUAD Publications",
+          type: "website",
+          image: LUADIconSmall.src,
+        },
+        optional: {
+          description:
+            "A place where Potterians' talents and knowledge are published",
+        },
+      }}
+    />
+
     <title>Luad Publications</title>
   </head>
   <body class="light-theme">
