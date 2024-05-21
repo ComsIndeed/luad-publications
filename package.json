@@ -1,0 +1,26 @@
+{
+  "name": "luad-astro",
+  "type": "module",
+  "version": "0.0.1",
+  "scripts": {
+    "dev": "astro dev",
+    "start": "astro dev",
+    "build": "astro check && astro build",
+    "preview": "astro preview",
+    "astro": "astro"
+  },
+  "dependencies": {
+    "@astrojs/check": "^0.7.0",
+    "@astrojs/react": "^3.3.4",
+    "@astrojs/solid-js": "^4.2.0",
+    "@types/react": "^18.3.2",
+    "@types/react-dom": "^18.3.0",
+    "animate.css": "^4.1.1",
+    "astro": "^4.8.6",
+    "firebase": "^10.12.0",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "solid-js": "^1.8.17",
+    "typescript": "^5.4.5"
+  }
+}

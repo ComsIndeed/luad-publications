@@ -1,0 +1,759 @@
+@keyframes panningAnimation {
+  0% {
+    background-position: 100% 90%;
+  }
+  25% {
+    background-position: 5% 75%;
+  }
+  50% {
+    background-position: 95% 95%;
+  }
+  75% {
+    background-position: 5% 75%;
+  }
+  100% {
+    background-position: 100% 90%;
+  }
+}
+@font-face {
+  font-family: "Chunkfive";
+  src: url("./Assets/fonts/chunkfive/Chunk.ttf");
+}
+@keyframes squeezeAndStretch {
+  0%, 100% {
+    transform: scaleX(1) scaleY(1);
+    transform-origin: center bottom;
+  }
+  50% {
+    transform-origin: center bottom;
+    transform: scaleX(0.8) scaleY(1.2);
+  }
+}
+.ThemeToggleButton {
+  border: none;
+  background: none;
+}
+.ThemeToggleButton svg {
+  width: 1.75em;
+  height: 1.75em;
+}
+
+.NavigationLink, .NavigationButton {
+  transition: transform 0.1s;
+  padding: 0.25rem;
+  margin: 0.25rem;
+  background: none;
+  border: none;
+}
+.NavigationLink:hover, .NavigationButton:hover {
+  transform: scale(1.0125);
+}
+.NavigationLink:active, .NavigationButton:active {
+  transform: scale(0.975);
+}
+.NavigationLink svg, .NavigationButton svg {
+  aspect-ratio: 16/16;
+  height: 1rem;
+}
+
+.BackButton, .BackButton * {
+  text-decoration: none;
+}
+
+.SearchBar {
+  display: flex;
+  align-items: center;
+  background-color: white;
+  padding: 0em 0.5em;
+  border-radius: 0.5em;
+}
+.SearchBar:focus-within {
+  outline: 1px solid black;
+  background-color: #c8d0ff;
+}
+.SearchBar .SearchBar-Input {
+  border: none;
+  padding: 1em;
+  background: none;
+}
+.SearchBar .SearchBar-Input:focus {
+  outline: none;
+}
+
+body {
+  margin: 0;
+  overflow-y: scroll;
+  max-width: 100vw;
+  min-height: 200vh;
+  margin-bottom: 5em;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  transition: background-color 0.25s cubic-bezier(0.16, 0.01, 0.81, 0.29), color 0.25s cubic-bezier(0.16, 0.01, 0.81, 0.29);
+}
+body h1, body h2, body h3, body p, body label, body button, body a, body svg, body input, body textarea, body svg, body a {
+  transition: color 0.25s cubic-bezier(0.16, 0.01, 0.81, 0.29), background-color 0.25s cubic-bezier(0.16, 0.01, 0.81, 0.29);
+}
+body::-webkit-scrollbar {
+  width: 8px;
+}
+body::-webkit-scrollbar-track {
+  background-color: #f5f5f5;
+}
+body::-webkit-scrollbar-thumb {
+  background-color: #888;
+  border-radius: 8px;
+}
+body::-webkit-scrollbar-thumb:hover {
+  background-color: #6f6f6f;
+}
+body.light-theme {
+  background-color: hsl(240, 100%, 95%);
+}
+body.light-theme * {
+  color: #010101;
+}
+body.light-theme .HomepageNavigation {
+  background-color: hsl(240, 100%, 95%);
+}
+body.light-theme .Navigation {
+  background-color: hsl(220.94, 100%, 100%);
+}
+body.light-theme .Homepage .HomepageNavigation {
+  filter: drop-shadow(0px 1em 1em rgba(230, 230, 255, 0.5));
+}
+body.light-theme .Homepage .Contents {
+  background-color: #f5f5ff;
+}
+body.dark-theme {
+  background-color: hsl(240, 100%, 5%);
+}
+body.dark-theme * {
+  color: #e0e0e0;
+}
+body.dark-theme textarea, body.dark-theme input:not([type=file]), body.dark-theme button {
+  color: #e0e0e0;
+  background-color: #00004d;
+}
+body.dark-theme .HomepageNavigation {
+  background-color: hsl(240, 100%, 5%);
+}
+body.dark-theme .Navigation {
+  background-color: hsl(263.16, 100%, 24%);
+}
+body.dark-theme .Homepage .HomepageNavigation {
+  filter: drop-shadow(0px 1em 1em rgba(0, 0, 26, 0.5));
+}
+body.dark-theme .Homepage .Contents {
+  background-color: #00000b;
+}
+body .MediaWrapper {
+  width: 100vw;
+}
+@media (min-width: 1024px) {
+  body .MediaWrapper {
+    width: calc(100vw - 8px);
+  }
+}
+body h1, body h2, body h3, body p {
+  margin: 0;
+  display: inline;
+}
+body .LuadTitle {
+  font-family: "Chunkfive";
+  color: gold;
+  font-weight: 500;
+  letter-spacing: -0.11em;
+  -webkit-text-stroke: 0.03em black;
+}
+body button, body a, body button p, body button label, body a label, body a p {
+  cursor: pointer;
+}
+body button svg {
+  background-color: transparent;
+}
+
+.Homepage {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+.Homepage > * {
+  flex: 0 0 auto;
+  max-width: 100%;
+}
+.Homepage .Header {
+  background-repeat: no-repeat;
+  background-size: cover;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background-size: 125%;
+  animation: panningAnimation 250s infinite linear;
+  width: 100%;
+  border-radius: 0.5em;
+  position: relative;
+}
+.Homepage .Header > * {
+  flex: 0 0 auto;
+  max-width: 100%;
+}
+.Homepage .Header::before {
+  content: "";
+  position: absolute;
+  top: 0%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(180deg, rgba(33, 0, 80, 0.75) 0%, #2e005f 100%);
+  -webkit-backdrop-filter: blur(2em);
+          backdrop-filter: blur(2em);
+  filter: opacity(60%);
+  z-index: 1;
+  transition: filter 1s;
+}
+.Homepage .Header:not(.default)::before {
+  filter: opacity(90%);
+}
+.Homepage .Header .HeaderScreen_Main {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  z-index: 2;
+  transition: min-height 1s ease, padding 1s ease;
+  position: relative;
+  color: white;
+  width: 100%;
+  min-height: 6em;
+  padding: 10em 0em 2em 0em;
+}
+.Homepage .Header .HeaderScreen_Main > * {
+  flex: 0 0 auto;
+  max-width: 100%;
+}
+.Homepage .Header .HeaderScreen_Main .Header-icon {
+  position: absolute;
+  top: 12%;
+  transition: opacity 1s;
+}
+.Homepage .Header .HeaderScreen_Main.expand .Header-icon {
+  opacity: 0;
+}
+.Homepage .Header .HeaderScreen_Main h1.Header-title {
+  color: white;
+}
+.Homepage .Header .HeaderScreen_Main h1.Header-title-luad, .Homepage .Header .HeaderScreen_Main .Header-title .Header-title-luad {
+  font-family: "Chunkfive";
+  font-weight: 400;
+  padding-right: 0.15em;
+  letter-spacing: -0.11em;
+  -webkit-text-stroke: 0.025em black;
+  background: #E7DE72;
+  background: linear-gradient(to bottom, rgb(255, 242, 104) 0%, rgba(255, 235, 15, 0.8823529412) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+.Homepage .Header .HeaderScreen_Main .Header-subtitle {
+  color: white;
+}
+@media (min-width: 1024px) {
+  .Homepage .Header .HeaderScreen_Main {
+    min-height: 10em;
+  }
+  .Homepage .Header .HeaderScreen_Main .Header-icon {
+    width: 10em;
+    height: 10em;
+  }
+  .Homepage .Header .HeaderScreen_Main .Header-title {
+    font-size: 2.5em;
+  }
+  .Homepage .Header .HeaderScreen_Main .Header-title.Header-title-luad {
+    font-size: 3em;
+  }
+  .Homepage .Header .HeaderScreen_Main .Header-subtitle {
+    font-size: 1em;
+  }
+}
+@media (min-width: 768px) and (max-width: 1024px) {
+  .Homepage .Header .HeaderScreen_Main {
+    min-height: 10em;
+  }
+  .Homepage .Header .HeaderScreen_Main .Header-icon {
+    width: 10em;
+    height: 10em;
+  }
+  .Homepage .Header .HeaderScreen_Main .Header-title {
+    font-size: 2em;
+  }
+  .Homepage .Header .HeaderScreen_Main .Header-title.Header-title-luad {
+    font-size: 3em;
+  }
+  .Homepage .Header .HeaderScreen_Main .Header-subtitle {
+    font-size: 0.7;
+  }
+}
+@media (max-width: 768px) {
+  .Homepage .Header .HeaderScreen_Main {
+    min-height: 6em;
+  }
+  .Homepage .Header .HeaderScreen_Main .Header-icon {
+    top: 20%;
+    width: 7.5em;
+    height: 7.5em;
+  }
+  .Homepage .Header .HeaderScreen_Main .Header-title {
+    font-size: 1.5em;
+  }
+  .Homepage .Header .HeaderScreen_Main .Header-title.Header-title-luad {
+    font-size: 2em;
+  }
+  .Homepage .Header .HeaderScreen_Main .Header-subtitle {
+    font-size: 0.75em;
+  }
+}
+.Homepage .Header .HeaderScreen_Main #LearnMoreButton {
+  position: absolute;
+  background-color: hsla(0, 0%, 3%, 0.4);
+  color: white;
+  padding: 0.75em;
+  border: none;
+  color: white;
+  bottom: 2em;
+  right: 2em;
+}
+.Homepage .Header .HeaderScreen_Main.expand {
+  width: 100%;
+  min-height: 80vh;
+  padding: 2em 0em;
+}
+@media (max-width: 768px) {
+  .Homepage .Header .HeaderScreen_Main.expand {
+    min-height: 75dvh;
+  }
+}
+@media (min-width: 768px) and (max-width: 1024px) {
+  .Homepage .Header .HeaderScreen_Main.expand {
+    min-height: 75dvh;
+  }
+}
+.Homepage .Header .ThemeToggleButton {
+  background-color: rgba(255, 255, 255, 0.25);
+  padding: 0.5em;
+  border-radius: 0.5em;
+  position: absolute;
+  top: 10%;
+  right: 2.5%;
+}
+.Homepage .HomepageNavigation {
+  transition: color 0.25s cubic-bezier(0.16, 0.01, 0.81, 0.29), background-color 0.25s cubic-bezier(0.16, 0.01, 0.81, 0.29);
+  transition: color 0.25s cubic-bezier(0.16, 0.01, 0.81, 0.29), background-color 0.25s cubic-bezier(0.16, 0.01, 0.81, 0.29), filter 0.25s cubic-bezier(0.16, 0.01, 0.81, 0.29);
+  position: sticky;
+  top: 0;
+  min-height: 3em;
+  margin: 0.5em 0em;
+  padding: 0% 5%;
+  width: 90%;
+  z-index: 3;
+}
+.Homepage .HomepageNavigation .NavigationLink, .Homepage .HomepageNavigation .NavigationButton {
+  display: inline-block;
+  width: -moz-min-content;
+  width: min-content;
+  transition: transform 0.1s;
+}
+.Homepage .HomepageNavigation .NavigationLink:hover, .Homepage .HomepageNavigation .NavigationButton:hover {
+  transform: scale(1.0125);
+}
+.Homepage .HomepageNavigation .NavigationLink:active, .Homepage .HomepageNavigation .NavigationButton:active {
+  transform: scale(0.975);
+}
+.Homepage .HomepageNavigation .NavigationButton {
+  background: none;
+}
+.Homepage .HomepageNavigation .NavigationButton.false, .Homepage .HomepageNavigation .NavigationButton.selected {
+  font-size: 1.075em;
+  position: relative;
+  opacity: 0.75;
+  transition: opacity 0.25s;
+}
+.Homepage .HomepageNavigation .NavigationButton.false::after, .Homepage .HomepageNavigation .NavigationButton.selected::after {
+  content: "";
+  position: absolute;
+  bottom: -5%;
+  left: 0%;
+  width: 100%;
+  height: 0.15em;
+  background: blue;
+  border-radius: 1em;
+  transition: height 0.25s;
+}
+.Homepage .HomepageNavigation .NavigationButton.false.selected, .Homepage .HomepageNavigation .NavigationButton.selected.selected {
+  opacity: 1;
+}
+.Homepage .HomepageNavigation .NavigationButton.false.selected::after, .Homepage .HomepageNavigation .NavigationButton.selected.selected::after {
+  height: 0.35em;
+}
+@media (max-width: 768px) {
+  .Homepage .HomepageNavigation {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+  .Homepage .HomepageNavigation > * {
+    flex: 0 0 auto;
+    max-width: 100%;
+  }
+  .Homepage .HomepageNavigation .top, .Homepage .HomepageNavigation .bottom {
+    display: flex;
+    gap: 1em;
+  }
+}
+@media (min-width: 768px) and (max-width: 1024px) {
+  .Homepage .HomepageNavigation {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+  .Homepage .HomepageNavigation > * {
+    flex: 0 0 auto;
+    max-width: 100%;
+  }
+  .Homepage .HomepageNavigation .top, .Homepage .HomepageNavigation .bottom {
+    display: flex;
+    gap: 1em;
+  }
+}
+@media (min-width: 1024px) {
+  .Homepage .HomepageNavigation {
+    display: grid;
+    grid-template-columns: 1fr 3fr 1fr;
+  }
+  .Homepage .HomepageNavigation .left {
+    grid-column: 1;
+    place-self: center start;
+  }
+  .Homepage .HomepageNavigation .center {
+    grid-column: 2;
+    place-self: center center;
+  }
+  .Homepage .HomepageNavigation .right {
+    grid-column: 3;
+    place-self: center end;
+  }
+}
+.Homepage .Contents {
+  transition: background-color 0.25s cubic-bezier(0.16, 0.01, 0.81, 0.29), color 0.25s cubic-bezier(0.16, 0.01, 0.81, 0.29);
+  padding: 2em 0em;
+  border-radius: 1em;
+  min-width: 90vw;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.Homepage .Contents .ContentGrid {
+  display: grid;
+  gap: 0.75em;
+}
+@media (min-width: 1024px) {
+  .Homepage .Contents .ContentGrid {
+    grid-template-columns: 1fr 1fr 1fr;
+  }
+}
+@media (min-width: 768px) and (max-width: 1024px) {
+  .Homepage .Contents .ContentGrid {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+@media (max-width: 768px) {
+  .Homepage .Contents .ContentGrid {
+    grid-template-columns: 1fr;
+  }
+}
+.Homepage .Contents .ContentGrid .ContentCard {
+  position: relative;
+  overflow: hidden;
+  min-width: 17.5em;
+  border-radius: 0.5em;
+  box-shadow: 3px 4px 0.75em 0em rgba(0, 0, 0, 0.57);
+}
+@media (min-width: 1024px) {
+  .Homepage .Contents .ContentGrid .ContentCard {
+    min-width: 22.5em;
+  }
+}
+.Homepage .Contents .ContentGrid .ContentCard::after {
+  content: "";
+  position: absolute;
+  top: 0%;
+  left: 0%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0) 50%, rgb(0, 0, 0) 75%);
+  transform: translateY(0%);
+  transition: transform 0.35s, filter 0.35s;
+  filter: opacity(50%);
+  z-index: 2;
+}
+.Homepage .Contents .ContentGrid .ContentCard::before {
+  content: "";
+  position: absolute;
+  left: 0%;
+  top: 100%;
+  width: 100%;
+  height: 100%;
+  background: hsl(0, 0%, 0%);
+  transform: translateY(0%);
+  transition: transform 0.35s, filter 0.35s;
+  filter: opacity(50%);
+  z-index: 2;
+}
+.Homepage .Contents .ContentGrid .ContentCard .ContentCard-thumbnail {
+  transform: translateY(0em) scale(1.00625);
+  transition: transform 0.35s;
+  z-index: 1;
+}
+.Homepage .Contents .ContentGrid .ContentCard .ContentCard-text {
+  transition: top 0.45s;
+  z-index: 3;
+  position: absolute;
+  top: 75%;
+  left: 5%;
+  display: flex;
+  flex-direction: column;
+}
+.Homepage .Contents .ContentGrid .ContentCard .ContentCard-text .ContentCard-author .ContentCard-author-text {
+  margin-left: 0.5em;
+}
+.Homepage .Contents .ContentGrid .ContentCard .ContentCard-text .ContentCard-body {
+  margin-top: 0.5em;
+  filter: opacity(0%);
+  transition: filter 0.25s ease;
+}
+.Homepage .Contents .ContentGrid .ContentCard .ContentCard-text * {
+  color: white;
+}
+.Homepage .Contents .ContentGrid .ContentCard:hover::after {
+  transform: translateY(-25%);
+  filter: opacity(75%);
+}
+.Homepage .Contents .ContentGrid .ContentCard:hover::before {
+  transform: translateY(-25%);
+  filter: opacity(75%);
+}
+.Homepage .Contents .ContentGrid .ContentCard:hover .ContentCard-thumbnail {
+  transform: translateY(-1em);
+}
+.Homepage .Contents .ContentGrid .ContentCard:hover .ContentCard-text {
+  top: 50%;
+}
+.Homepage .Contents .ContentGrid .ContentCard:hover .ContentCard-text .ContentCard-body {
+  filter: opacity(100%);
+}
+
+.Loading {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+.Loading > * {
+  flex: 0 0 auto;
+  max-width: 100%;
+}
+.Loading .Pot {
+  animation: squeezeAndStretch 2s infinite alternate;
+}
+
+.DocumentPage {
+  display: flex;
+  flex-direction: column;
+  max-width: 100vw;
+}
+@media (min-width: 1024px) {
+  .DocumentPage {
+    padding: 2em 4em;
+  }
+}
+@media (min-width: 768px) and (max-width: 1024px) {
+  .DocumentPage {
+    padding: 2em 6em;
+  }
+}
+@media (max-width: 768px) {
+  .DocumentPage {
+    padding: 2em 1em;
+  }
+}
+.DocumentPage img {
+  border-radius: 0.5em;
+  aspect-ratio: 16/9;
+  -o-object-fit: cover;
+     object-fit: cover;
+}
+@media (min-width: 1024px) {
+  .DocumentPage img {
+    width: 55vw;
+    height: auto;
+  }
+}
+@media (min-width: 768px) and (max-width: 1024px) {
+  .DocumentPage img {
+    align-self: center;
+    width: 80vw;
+    height: auto;
+  }
+}
+@media (max-width: 768px) {
+  .DocumentPage img {
+    align-self: center;
+    width: 90vw;
+    height: auto;
+  }
+}
+.DocumentPage h1, .DocumentPage h2, .DocumentPage h3 {
+  margin: 0.5em 0em;
+  display: block;
+}
+@media (min-width: 768px) and (max-width: 1024px) {
+  .DocumentPage h1, .DocumentPage h2, .DocumentPage h3 {
+    align-self: center;
+    font-size: 2.5em;
+  }
+}
+.DocumentPage p {
+  text-align: left;
+}
+@media (min-width: 768px) and (max-width: 1024px) {
+  .DocumentPage p {
+    font-size: 1.5em;
+  }
+}
+
+.Navigation {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  position: sticky;
+  top: 0%;
+  z-index: 10;
+  justify-content: space-between;
+}
+.Navigation > * {
+  flex: 0 0 auto;
+  max-width: 100%;
+}
+@media (max-width: 768px) {
+  .Navigation {
+    border-bottom: none;
+  }
+}
+.Navigation * {
+  vertical-align: middle;
+  margin: 0.125em 0.15em;
+}
+.Navigation .BackButton {
+  padding: 0.25em;
+}
+
+.NotFoundPage {
+  height: 30vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+.NotFoundPage > * {
+  flex: 0 0 auto;
+  max-width: 100%;
+}
+
+.AccountPage {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 60vh;
+}
+.AccountPage > * {
+  flex: 0 0 auto;
+  max-width: 100%;
+}
+
+.AdminPage {
+  padding: 1em;
+  font-size: 125%;
+}
+.AdminPage textarea, .AdminPage input {
+  border: none;
+  padding: 0.5em;
+}
+.AdminPage .ContentManagement .CreateView {
+  display: flex;
+  flex-direction: column;
+}
+.AdminPage .ContentManagement .DocumentListView {
+  min-width: 45vw;
+}
+.AdminPage .ContentManagement .DocumentListView .FirestoreList, .AdminPage .ContentManagement .DocumentListView .DraftList {
+  display: flex;
+  flex-direction: column;
+}
+.AdminPage .ContentManagement .DocumentListView .FirestoreList .FirestoreListItem, .AdminPage .ContentManagement .DocumentListView .FirestoreList .DraftListItem, .AdminPage .ContentManagement .DocumentListView .DraftList .FirestoreListItem, .AdminPage .ContentManagement .DocumentListView .DraftList .DraftListItem {
+  display: flex;
+  flex-direction: column;
+}
+.AdminPage .ContentManagement .DocumentListView .DraftList {
+  display: grid;
+}
+.AdminPage .ContentManagement .DocumentListView .DraftList .DraftEntryItem {
+  border-bottom: 1px solid;
+  padding: 0.5em 0.5em;
+  display: flex;
+  flex-direction: column;
+  margin: 0em 2em;
+}
+.AdminPage .ContentManagement .DocumentListView .DraftList .DraftEntryItem .info * {
+  margin: 0.5em 0.25em;
+  display: flex;
+  align-items: center;
+}
+.AdminPage .ContentManagement .DocumentListView .DraftList .DraftEntryItem .info .text * {
+  padding: 0em 0.5em;
+  border-left: 1px solid black;
+}
+.AdminPage .ContentManagement .DocumentListView .DraftList .DraftEntryItem .buttons * {
+  padding: 0.5em;
+}
+.AdminPage .ContentManagement .DocumentListView .DraftList .DraftEntryItem .editPanel textarea {
+  width: 100%;
+  min-height: 20em;
+}
+.AdminPage .ContentManagement .DocumentListView .FirestoreList .FirestoreListItem {
+  border-bottom: 1px solid;
+  padding: 0.5em 0.5em;
+  display: flex;
+  flex-direction: column;
+  margin: 0em 2em;
+}
+.AdminPage .ContentManagement .DocumentListView .FirestoreList .FirestoreListItem * {
+  margin: 0.25em 0em;
+}
+.AdminPage .ContentManagement .DocumentListView .FirestoreList .FirestoreListItem .info * {
+  padding: 0em 0.5em;
+  border-left: 1px solid black;
+}
+.AdminPage .ContentManagement .DocumentListView .FirestoreList .FirestoreListItem .buttons * {
+  padding: 0.5em;
+}
+.AdminPage .ContentManagement .DocumentListView .FirestoreList .FirestoreListItem .editPanel textarea {
+  width: 100%;
+  min-height: 20em;
+}
+.AdminPage .sectionDivider {
+  margin: 2em;
+  padding: 1em 0em;
+  border-bottom: 1px solid black;
+}/*# sourceMappingURL=main.css.map */
