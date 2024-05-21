@@ -6,7 +6,7 @@ import { createSafeRoute } from "../../lib/randomUtils";
 import { marked } from "marked";
 import { Image } from "astro:assets";
 import "animate.css";
-import { ViewTransitions } from "astro:transitions";
+// import { ViewTransitions } from "astro:transitions";
 import NotFoundImage from "../../Assets/notFound.webp";
 // import DOMPurify from "dompurify";
 
@@ -24,7 +24,7 @@ export async function getStaticPaths() {
   });
 }
 
-const { id, title } = Astro.params;
+const { id } = Astro.params;
 
 const currentDocumentSnapshot = await getDoc(doc(db, "documents/" + id));
 const currentDocument = currentDocumentSnapshot.data();
@@ -46,18 +46,16 @@ if (!!documentBody) {
     <meta name="viewport" content="width=device-width" />
     <meta name="generator" content={Astro.generator} />
     <title>{currentDocument?.head?.title}</title>
-    <ViewTransitions />
   </head>
   <body class="light-theme">
     <article class="DocumentPage">
       <Image
-        alt="Header Image of the post"
+        alt=`${currentDocument?.head?.title} post's thumbnail'`
         src={!!currentDocument?.head?.headerImage?.small
           ? currentDocument?.head?.headerImage?.small
           : NotFoundImage}
         width={768}
         height={452}
-        transition:name={`HeaderImage_${id}`}
       />
       <h1>{currentDocument?.head?.title}</h1>
       <p

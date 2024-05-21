@@ -27,7 +27,6 @@ const fetchedDocuments = retrievedData.docs;
               height={270}
               src={item?.data()?.head?.headerImage.small || NotFoundImage}
               alt={`Thumbnail for the article: "${item?.data()?.head?.title}"`}
-              transition:name={`HeaderImage_${item.id}`}
             />
             <div class="ContentCard-text">
               <span class="ContentCard-author">

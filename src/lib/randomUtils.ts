@@ -18,15 +18,15 @@ export function createSafeRoute(title: string = "Untitled"): string {
 }
 
 export function formatTimeElapsed(date: Date | Timestamp) {
-  let originalDate = date;
+  let originalDate: any = date;
 
   // Convert Firestore Timestamp to JavaScript Date if needed
   if (date instanceof Timestamp) {
     originalDate = date.toDate();
   }
 
-  const now = new Date();
-  const elapsedMilliseconds = now - originalDate;
+  const now: any = new Date();
+  const elapsedMilliseconds: any = now - originalDate;
   const elapsedSeconds = elapsedMilliseconds / 1000;
   const elapsedMinutes = elapsedSeconds / 60;
   const elapsedHours = elapsedMinutes / 60;
