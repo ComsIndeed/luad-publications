@@ -6,10 +6,9 @@ import { createSafeRoute } from "../../lib/randomUtils";
 import { marked } from "marked";
 import { Image } from "astro:assets";
 import "animate.css";
-// import { ViewTransitions } from "astro:transitions";
 import NotFoundImage from "../../Assets/notFound.webp";
-// import DOMPurify from "dompurify";
 import { SEO } from "astro-seo";
+import Navigation from "../../components/navigation.astro";
 
 export async function getStaticPaths() {
   const retrievedData = await getDocs(collection(db, "documents"));
@@ -30,14 +29,13 @@ const { id } = Astro.params;
 const currentDocumentSnapshot = await getDoc(doc(db, "documents/" + id));
 const currentDocument = currentDocumentSnapshot.data();
 
-const documentBody: string = currentDocument?.body;
-let documentBodyMarkdown;
+let documentBody: string = currentDocument?.body;
+let documentBodyMarkdown = "No content";
 if (!!documentBody) {
   documentBodyMarkdown = await marked.parse(documentBody);
+} else {
+  documentBody = "No content";
 }
-// const markdown = DOMPurify.sanitize("<h1>Test</h1>");
-
-// document.getElementById("bodyText").innerHTML = documentBodyMarkdown;
 ---
 
 <html lang="en">
@@ -49,7 +47,7 @@ if (!!documentBody) {
 
     <SEO
       title={currentDocument?.head?.title + " | LUAD Publications"}
-      description={documentBody.slice(0, 64) + "..."}
+      description={documentBody.slice(0, 155) + "..."}
       openGraph={{
         basic: {
           title: currentDocument?.head?.title + " | LUAD Publications",
@@ -59,7 +57,7 @@ if (!!documentBody) {
             : NotFoundImage.src,
         },
         optional: {
-          description: documentBody.slice(0, 64) + "...",
+          description: documentBody.slice(0, 155) + "...",
         },
         article: {
           authors: !!currentDocument?.head?.author
@@ -72,6 +70,7 @@ if (!!documentBody) {
     <title>{currentDocument?.head?.title}</title>
   </head>
   <body class="light-theme">
+    <Navigation />
     <article class="DocumentPage">
       <Image
         alt=`${currentDocument?.head?.title} post's thumbnail'`
@@ -81,7 +80,19 @@ if (!!documentBody) {
         width={768}
         height={452}
       />
+      <br />
       <h1>{currentDocument?.head?.title}</h1>
+      {
+        currentDocument?.head?.author && (
+          <>
+            <p>By: {currentDocument?.head?.author}</p>
+            <>
+              <br />
+              <br />
+            </>
+          </>
+        )
+      }
       <p
         id="bodyText"
         set:html={!!documentBodyMarkdown ? documentBodyMarkdown : "No content"}

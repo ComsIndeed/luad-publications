@@ -70,3 +70,26 @@ export function formatTimeElapsed(date: Date | Timestamp) {
     return `${Math.floor(elapsedSeconds)} second ago`;
   }
 }
+
+export function toggleTheme() {
+  const documentClassList = document.body.classList;
+  if (documentClassList.contains("light-theme")) {
+    documentClassList.remove("light-theme");
+    documentClassList.add("dark-theme");
+  } else {
+    documentClassList.remove("dark-theme");
+    documentClassList.add("light-theme");
+  }
+}
+
+export function getScreenType(minWidth: number): {
+  isDesktop: boolean;
+  isTablet: boolean;
+  isPhone: boolean;
+} {
+  return {
+    isDesktop: minWidth >= 1024,
+    isTablet: minWidth >= 768 && minWidth < 1024,
+    isPhone: minWidth < 768,
+  };
+}

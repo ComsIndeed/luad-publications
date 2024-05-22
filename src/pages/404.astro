@@ -1,0 +1,22 @@
+---
+import "../main.sass";
+import LUADSmall from "../Assets/luad-small.webp";
+import { Image } from "astro:assets";
+---
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width" />
+    <meta name="generator" content={Astro.generator} />
+    <title>404 | LUAD Publications</title>
+  </head>
+  <body class="light-theme">
+    <div class="NotFoundPage">
+      <Image src={LUADSmall} alt="LUAD Logo" width={250} />
+      <h1>Article not found | Error 404</h1>
+      <p>Please check if the link is correct...</p>
+      <a href="/">Click this text to go back</a>
+    </div>
+  </body>
+</html>

@@ -1,0 +1,31 @@
+---
+import { Icon } from "astro-icon/components";
+import LUADIconSmall from "../Assets/luad-small.webp";
+import { Image } from "astro:assets";
+import { toggleTheme } from "../lib/randomUtils";
+---
+
+<nav class="Navigation">
+  <a href="/" class="BackButton"><Icon name="mdi:arrow-back" /> </a>
+  <div class="Navigation-logo">
+    <!-- <Image
+      class="Header-icon"
+      src={LUADIconSmall}
+      alt="LUAD Icon"
+      height={35}
+    /> -->
+    <h2 class="LuadTitle">LUAD</h2>
+  </div>
+  <div class="Navigation-options">
+    <button class="ThemeToggleButton">
+      <Icon name="mdi:theme-light-dark" />
+    </button>
+  </div>
+  <script>
+    import { toggleTheme } from "../lib/randomUtils";
+
+    document
+      .getElementsByClassName("ThemeToggleButton")[0]!
+      .addEventListener("click", toggleTheme);
+  </script>
+</nav>

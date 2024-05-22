@@ -206,10 +206,10 @@ body
   &
     .LuadTitle
       font-family: "Chunkfive"
-      color: gold
-      font-weight: 500
-      letter-spacing: -0.11em
-      -webkit-text-stroke: 0.03em black
+      color: rgb(255, 238, 0)
+      font-weight: 600
+      letter-spacing: -0.07em
+      -webkit-text-stroke: 0.05em black
   button, a, button p, button label, a label, a p
     cursor: pointer
   button svg
@@ -539,9 +539,12 @@ body
 
   .BackButton
     padding: 0.25em
+    transition: scale 0.15s
+    &:hover
+      scale: 1.05
 
 .NotFoundPage
-  height: 30vh
+  height: 80vh
   @include center()
 
 .AccountPage

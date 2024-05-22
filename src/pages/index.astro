@@ -4,6 +4,9 @@ import ContentList from "../components/contentList.astro";
 import "../main.sass";
 import { SEO } from "astro-seo";
 import LUADIconSmall from "../Assets/luad-small.webp";
+import { getScreenType } from "../lib/randomUtils";
+
+const {} = getScreenType(window.innerWidth);
 ---
 
 <html lang="en">
@@ -32,9 +35,13 @@ import LUADIconSmall from "../Assets/luad-small.webp";
     <title>Luad Publications</title>
   </head>
   <body class="light-theme">
-    <div class="Homepage">
-      <Header />
-      <ContentList />
+    <div id="root">
+      <div class="MediaWrapper">
+        <div class="Homepage">
+          <Header />
+          <ContentList />
+        </div>
+      </div>
     </div>
   </body>
 </html>
