@@ -82,14 +82,14 @@ export function toggleTheme() {
   }
 }
 
-export function getScreenType(minWidth: number): {
-  isDesktop: boolean;
-  isTablet: boolean;
-  isPhone: boolean;
-} {
-  return {
-    isDesktop: minWidth >= 1024,
-    isTablet: minWidth >= 768 && minWidth < 1024,
-    isPhone: minWidth < 768,
-  };
-}
+// export function getScreenType(minWidth: number): {
+//   isDesktop: boolean;
+//   isTablet: boolean;
+//   isPhone: boolean;
+// } {
+//   return {
+//     isDesktop: minWidth >= 1024,
+//     isTablet: minWidth >= 768 && minWidth < 1024,
+//     isPhone: minWidth < 768,
+//   };
+// }

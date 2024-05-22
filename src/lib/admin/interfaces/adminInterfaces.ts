@@ -1,5 +1,5 @@
-import { Firestore, Timestamp } from "firebase/firestore";
-import { FirebaseStorage } from "firebase/storage";
+import type { Firestore, Timestamp } from "firebase/firestore";
+import type { FirebaseStorage } from "firebase/storage";
 
 export interface AdministrativeConstructorConfig {
   firestore: Firestore;

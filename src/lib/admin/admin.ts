@@ -1,16 +1,12 @@
 // For doing admin stuff
-import {
+import { collection, deleteDoc, doc, getDocs } from "firebase/firestore";
+import type {
+  Timestamp,
   DocumentSnapshot,
   Firestore,
-  QuerySnapshot,
-  Timestamp,
-  collection,
-  deleteDoc,
-  doc,
-  getDocs,
 } from "firebase/firestore";
-import { FirebaseStorage } from "firebase/storage";
-import {
+import type { FirebaseStorage } from "firebase/storage";
+import type {
   AdministrativeConstructorConfig,
   AdministrativeConstructorConfigOptions,
   LuadDocumentObject,
@@ -25,35 +21,39 @@ class Administrative {
   constructor(config: AdministrativeConstructorConfig) {
     this.firestore = config.firestore;
     this.firebaseStorage = config.firebaseStorage;
+    this.options = config.options;
   }
 
-  // Setup and fetch posts
-  luadDocuments: LuadDocuments;
+  // TODO FIX THIS
+  // // Setup and fetch posts
+  // luadDocuments: LuadDocuments = [];
 
-  async init() {
-    this.luadDocuments = new LuadDocuments(
-      this.firestore,
-      this.options.firestoreDocumentCollectionPath
-    );
-  }
+  // async init() {
+  //   this.luadDocuments = new LuadDocuments(
+  //     this.firestore,
+  //     this.options.firestoreDocumentCollectionPath
+  //   );
+  // }
 }
 
 class LuadDocuments {
   database: Firestore;
-  documents: LuadDocument[];
+  documents: LuadDocument[] = [];
   path: string;
   constructor(database: Firestore, path: string) {
     this.database = database;
+    this.path = path;
   }
 
-  async updateDocuments() {
-    const documentSnapshots = await getDocs(
-      collection(this.database, this.path)
-    );
-    const LuadDocumentClasses = documentSnapshots.docs.map((doc) =>
-      this.toLuadDocumentClass(doc)
-    );
-  }
+  // TODO FIX THIS
+  // async updateDocuments() {
+  //   const documentSnapshots = await getDocs(
+  //     collection(this.database, this.path)
+  //   );
+  //   const LuadDocumentClasses = documentSnapshots.docs.map((doc) =>
+  //     this.toLuadDocumentClass(doc)
+  //   );
+  // }
 
   toLuadDocumentClass(documentSnapshot: DocumentSnapshot) {
     const LuadDocumentInstance = new LuadDocument(
@@ -92,7 +92,7 @@ class LuadDocument {
   database: Firestore;
 
   // TODO FIX THIS PROPERTY, NOT DONE YET
-  snapshot: DocumentSnapshot;
+  // snapshot: DocumentSnapshot;
 
   constructor(database: Firestore, id: string, data: LuadDocumentObject) {
     this.id = id;
@@ -101,9 +101,9 @@ class LuadDocument {
     this.database = database;
   }
 
-  delete() {
-    return deleteDoc(doc(this.database, this.snapshot.ref.path));
-  }
+  // delete() {
+  //   return deleteDoc(doc(this.database, this.snapshot.ref.path));
+  // }
 }
 
 export { Administrative, LuadDocument };
