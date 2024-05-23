@@ -38,8 +38,7 @@ const categoryOptions = ["all", ...categories];
 
         categoryElement.setAttribute("href", `/${option}/`);
       });
-      categoryOptions.all.setAttribute("href", "/")
-
+      categoryOptions.all.setAttribute("href", "/");
 
       if (window.location.pathname === "/") {
         const allCategorySelection = categoryOptions.all;
@@ -65,13 +64,14 @@ const categoryOptions = ["all", ...categories];
       }
     </script>
   </div>
-  <div class="SearchBar">
+  <form class="SearchBar">
     <Icon class="SearchBar-Icon" name="mdi:magnify" />
     <input
       type="search"
-      name="Search"
+      name="search"
       id="HomepageNavigation-SearchBar"
       class="SearchBar-Input"
+      placeholder="Search LUAD"
     />
-  </div>
+  </form>
 </div>

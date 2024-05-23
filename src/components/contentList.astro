@@ -139,5 +139,14 @@ const { selectedCategory } = Astro.props;
             );
           })
     }
+    <script>
+      const queryString = window.location.search;
+      const urlParams = new URLSearchParams(queryString);
+      const searchQuery = urlParams.get("search");
+
+      if (searchQuery != "") {
+        document.querySelector(".ContentGrid")!.textContent = "";
+      }
+    </script>
   </div>
 </div>
