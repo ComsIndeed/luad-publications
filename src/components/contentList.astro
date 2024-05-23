@@ -5,60 +5,139 @@ import { db } from "../lib/firebase";
 import NotFoundImage from "../Assets/notFound.webp";
 import { Image } from "astro:assets";
 import { Icon } from "astro-icon/components";
+import type { LuadDocumentObject } from "../lib/admin/interfaces/adminInterfaces";
 
 const retrievedData = await getDocs(collection(db, "documents"));
 const fetchedDocuments = retrievedData.docs;
+fetchedDocuments.forEach((item) => {
+  const docum: LuadDocumentObject = item.data();
+  docum.head?.meta?.category?.includes;
+});
+
+const { selectedCategory } = Astro.props;
 ---
 
 <div class="Contents">
+  {
+    (selectedCategory === "all" && fetchedDocuments.length == 0) ||
+      (selectedCategory != "all" &&
+        fetchedDocuments.filter((item) =>
+          item.data().head?.meta?.category?.includes(selectedCategory)
+        ).length == 0 && <p>Nothing here {":("}</p>)
+  }
   <div class="ContentGrid">
     {
-      fetchedDocuments.map((item) => {
-        return (
-          <a
-            href={`/posts/${createSafeRoute(item.data()?.head?.title)}-${item.id}`}
-            class="ContentCard animate__animated animate__fadeIn"
-          >
-            {/*  */}
+      selectedCategory === "all" &&
+        fetchedDocuments.length > 0 &&
+        fetchedDocuments.map((item) => {
+          return (
+            <a
+              href={`/posts/${createSafeRoute(item.data()?.head?.title)}-${item.id}`}
+              class="ContentCard animate__animated animate__fadeIn"
+            >
+              {/*  */}
 
-            <Image
-              class="ContentCard-thumbnail"
-              width={360}
-              height={270}
-              src={item?.data()?.head?.headerImage.small || NotFoundImage}
-              alt={`Thumbnail for the article: "${item?.data()?.head?.title}"`}
-            />
-            <div class="ContentCard-text">
-              <span class="ContentCard-author">
-                <Icon class="ContentCard-author-icon" name="mdi:user" />
-                <p class="ContentCard-author-text">
-                  {item?.data()?.head?.author}
+              <Image
+                class="ContentCard-thumbnail"
+                width={360}
+                height={270}
+                src={item?.data()?.head?.headerImage.small || NotFoundImage}
+                alt={`Thumbnail for the article: "${item?.data()?.head?.title}"`}
+              />
+              <div class="ContentCard-text">
+                <span class="ContentCard-author">
+                  <Icon class="ContentCard-author-icon" name="mdi:user" />
+                  <p class="ContentCard-author-text">
+                    {item?.data()?.head?.author}
+                  </p>
+                  {item?.data()?.head?.creationDateRaw && (
+                    <>
+                      <p>
+                        {" "}
+                        •{" "}
+                        {formatTimeElapsed(item?.data()?.head?.creationDateRaw)}
+                      </p>
+                    </>
+                  )}
+                </span>
+                <h3 class="ContentCard-title"> {item?.data()?.head?.title} </h3>
+                <p class="ContentCard-body animate__animated animate__fadeInUp">
+                  {item
+                    ?.data()
+                    ?.body?.replaceAll("#", "")
+                    ?.replaceAll("*", "")
+                    ?.replaceAll("<br />", " ")
+                    ?.substr(0, 194)}
+                  ...
                 </p>
-                {item?.data()?.head?.creationDateRaw && (
-                  <>
-                    <p>
-                      {" "}
-                      • {formatTimeElapsed(item?.data()?.head?.creationDateRaw)}
-                    </p>
-                  </>
-                )}
-              </span>
-              <h3 class="ContentCard-title"> {item?.data()?.head?.title} </h3>
-              <p class="ContentCard-body animate__animated animate__fadeInUp">
-                {item
-                  ?.data()
-                  ?.body?.replaceAll("#", "")
-                  ?.replaceAll("*", "")
-                  ?.replaceAll("<br />", " ")
-                  ?.substr(0, 194)}
-                ...
-              </p>
-            </div>
+              </div>
 
-            {/*  */}
-          </a>
-        );
-      })
+              {/*  */}
+            </a>
+          );
+        })
+    }
+    {
+      selectedCategory != "all" &&
+        fetchedDocuments.filter((item) =>
+          item.data().head?.meta?.category?.includes(selectedCategory)
+        ).length > 0 &&
+        fetchedDocuments
+          .filter((item) =>
+            item.data().head?.meta?.category?.includes(selectedCategory)
+          )
+          .map((item) => {
+            return (
+              <a
+                href={`/posts/${createSafeRoute(item.data()?.head?.title)}-${item.id}`}
+                class="ContentCard animate__animated animate__fadeIn"
+              >
+                {/*  */}
+
+                <Image
+                  class="ContentCard-thumbnail"
+                  width={360}
+                  height={270}
+                  src={item?.data()?.head?.headerImage.small || NotFoundImage}
+                  alt={`Thumbnail for the article: "${item?.data()?.head?.title}"`}
+                />
+                <div class="ContentCard-text">
+                  <span class="ContentCard-author">
+                    <Icon class="ContentCard-author-icon" name="mdi:user" />
+                    <p class="ContentCard-author-text">
+                      {item?.data()?.head?.author}
+                    </p>
+                    {item?.data()?.head?.creationDateRaw && (
+                      <>
+                        <p>
+                          {" "}
+                          •{" "}
+                          {formatTimeElapsed(
+                            item?.data()?.head?.creationDateRaw
+                          )}
+                        </p>
+                      </>
+                    )}
+                  </span>
+                  <h3 class="ContentCard-title">
+                    {" "}
+                    {item?.data()?.head?.title}{" "}
+                  </h3>
+                  <p class="ContentCard-body animate__animated animate__fadeInUp">
+                    {item
+                      ?.data()
+                      ?.body?.replaceAll("#", "")
+                      ?.replaceAll("*", "")
+                      ?.replaceAll("<br />", " ")
+                      ?.substr(0, 194)}
+                    ...
+                  </p>
+                </div>
+
+                {/*  */}
+              </a>
+            );
+          })
     }
   </div>
 </div>

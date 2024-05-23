@@ -2,15 +2,25 @@
 import Image from "astro/components/Image.astro";
 import LuadIcon from "../Assets/luad.webp";
 import HeaderImageSmall from "../Assets/header-small.webp";
+import { Icon } from "astro-icon/components";
 ---
 
-<!-- For lazy loading header image --><!-- Make this have an expand thingy if possible -->
 <div
   class="Header default"
   id="Header"
   style=`background-image: url(${HeaderImageSmall.src})`
 >
   <div class="HeaderScreen_Main">
+    <button class="ThemeToggleButton">
+      <Icon name="mdi:theme-light-dark" />
+    </button>
+    <script>
+      import { toggleTheme } from "../lib/randomUtils";
+
+      document
+        .getElementsByClassName("ThemeToggleButton")[0]!
+        .addEventListener("click", toggleTheme);
+    </script>
     <Image class="Header-icon" src={LuadIcon} alt="Luad Icon" />
     <h1
       class="Header-title Header-title-luad animate__animated animate__fadeIn"

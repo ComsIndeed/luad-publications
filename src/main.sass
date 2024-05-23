@@ -137,7 +137,7 @@ $d: 1024px
   .SearchBar-Icon
   .SearchBar-Input
     border: none
-    padding: 1em
+    padding: 0.5em
     background: none
     &:focus
       outline: none
@@ -170,7 +170,8 @@ body
     *
       color: $color-light
     .HomepageNavigation
-      background-color: $bg-light
+      background-color: rgba($bg-light, 0.75)
+      backdrop-filter: blur(1em)
     .Navigation
       background-color: $accent-light
     .Homepage
@@ -187,7 +188,8 @@ body
       color: $color-dark
       background-color: lighten($bg-dark, 10%)
     .HomepageNavigation
-      background-color: $bg-dark
+      background-color: rgba($bg-dark, 0.75)
+      backdrop-filter: blur(1em)
     .Navigation
       background-color: $accent-dark
     .Homepage
@@ -341,7 +343,13 @@ body
     margin: 0.5em 0em
     padding: 0% 5%
     width: 90%
-    z-index: 3
+    z-index: 4
+    display: flex
+    flex-direction: column
+    align-items: center
+    padding-bottom: 0.5em
+
+    gap: 0.5em
 
     .NavigationLink, .NavigationButton
       display: inline-block
@@ -371,30 +379,24 @@ body
         &::after
           height: 0.35em
 
-    @include forScreens($p)
-      @include center()
-      .top, .bottom
-        display: flex
-        gap: 1em
+    // @include forScreens($t)
+    //   @include center()
+    //   .top, .bottom
+    //     display: flex
+    //     gap: 1em
 
-    @include forScreens($t)
-      @include center()
-      .top, .bottom
-        display: flex
-        gap: 1em
-
-    @include forScreens($d)
-      display: grid
-      grid-template-columns: 1fr 3fr 1fr
-      .left
-        grid-column: 1
-        place-self: center start
-      .center
-        grid-column: 2
-        place-self: center center
-      .right
-        grid-column: 3
-        place-self: center end
+    // @include forScreens($d)
+    //   display: grid
+    //   grid-template-columns: 1fr 3fr 1fr
+    //   .left
+    //     grid-column: 1
+    //     place-self: center start
+    //   .center
+    //     grid-column: 2
+    //     place-self: center center
+    //   .right
+    //     grid-column: 3
+    //     place-self: center end
 
   .Contents
     @include colorShift([background-color, color])

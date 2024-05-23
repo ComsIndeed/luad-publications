@@ -1,0 +1,21 @@
+---
+import { categories } from "../lib/config";
+import HomepageLayout from "../layouts/homepage.astro";
+import ContentList from "../components/contentList.astro";
+
+export function getStaticPaths() {
+  return categories.map((categoryItem) => {
+    return {
+      params: {
+        category: categoryItem,
+      },
+    };
+  });
+}
+
+const { category } = Astro.params;
+---
+
+<HomepageLayout>
+  <ContentList selectedCategory={category} />
+</HomepageLayout>

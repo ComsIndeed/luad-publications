@@ -1,0 +1,77 @@
+---
+import "../main.sass";
+import { categories } from "../lib/config";
+import { Icon } from "astro-icon/components";
+const categoryOptions = ["all", ...categories];
+---
+
+<div class="HomepageNavigation">
+  <div class="categorySelection">
+    {
+      categoryOptions.map((category) => {
+        return (
+          <a
+            class="NavigationButton false categoryOption"
+            id={category + "CategoryOption"}
+            name={category}
+          >
+            {category[0].toUpperCase() + category.slice(1)}
+          </a>
+        );
+      })
+    }
+    <script>
+      import { categories } from "../lib/config";
+      let categoryOptions: { all: HTMLElement; [name: string]: HTMLElement } = {
+        all: document.getElementById("allCategoryOption")!,
+      };
+      categories.forEach((category) => {
+        const categoryOption = document.getElementById(
+          `${category}CategoryOption`
+        );
+        categoryOptions = { ...categoryOptions, [category!]: categoryOption! };
+      });
+
+      Object.keys(categoryOptions).forEach((option) => {
+        const categoryElement = categoryOptions[option];
+        const categoryName = categoryElement.attributes.getNamedItem("name");
+
+        categoryElement.setAttribute("href", `/${option}/`);
+      });
+      categoryOptions.all.setAttribute("href", "/")
+
+
+      if (window.location.pathname === "/") {
+        const allCategorySelection = categoryOptions.all;
+        allCategorySelection.classList.remove("false");
+        allCategorySelection.classList.add("selected");
+      }
+
+      if (window.location.pathname != "/") {
+        const currentWindowLocation = window.location.pathname.slice(1);
+        Object.keys(categoryOptions).forEach((option) => {
+          const categoryElement = categoryOptions[option];
+          const categoryName =
+            categoryElement.attributes.getNamedItem("name")?.value;
+
+          if (currentWindowLocation === categoryName) {
+            categoryElement.classList.remove("false");
+            categoryElement.classList.add("selected");
+          } else {
+            categoryElement.classList.remove("selected");
+            categoryElement.classList.add("false");
+          }
+        });
+      }
+    </script>
+  </div>
+  <div class="SearchBar">
+    <Icon class="SearchBar-Icon" name="mdi:magnify" />
+    <input
+      type="search"
+      name="Search"
+      id="HomepageNavigation-SearchBar"
+      class="SearchBar-Input"
+    />
+  </div>
+</div>
