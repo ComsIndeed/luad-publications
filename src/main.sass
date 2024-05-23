@@ -253,6 +253,10 @@ body
       width: 100%
       min-height: 6em
       padding: 10em 0em 2em 0em
+      .Header-title, .Header-subtitle
+        text-shadow: 9px 9px 8px 0px rgba(0,0,0,0.45)
+        // -webkit-text-shadow: 9px 9px 8px 0px rgba(0,0,0,0.45)
+        // -moz-text-shadow: 9px 9px 8px 0px rgba(0,0,0,0.45)
       .Header-icon
         position: absolute
         top: 12%
@@ -377,7 +381,7 @@ body
       &.selected
         opacity: 1
         &::after
-          height: 0.35em
+          height: 0.25em
 
     // @include forScreens($t)
     //   @include center()

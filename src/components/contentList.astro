@@ -139,7 +139,21 @@ const { selectedCategory } = Astro.props;
             );
           })
     }
+    <div
+      id="data-fetchedDocuments"
+      data-cached_documents={JSON.stringify(fetchedDocuments)}
+    >
+    </div>
     <script>
+      // Client-side script to read data from the data attribute
+      document.addEventListener("DOMContentLoaded", () => {
+        const dataElement = document.getElementById("data-fetchedDocuments")!;
+        const data = JSON.parse(dataElement.dataset.cached_documents!);
+        // Now you can use the data object in your client-side code
+        console.log(data);
+      });
+
+      import { sortByMatch } from "../lib/searchLib";
       const queryString = window.location.search;
       const urlParams = new URLSearchParams(queryString);
       const searchQuery = urlParams.get("search");
