@@ -79,7 +79,7 @@ const categoryOptions = ["all", ...categories];
       const searchQuery = urlParams.get("search");
       
       if (searchQuery != null) {
-      document.getElementById("HomepageNavigation-SearchBar").setAttribute("value", searchQuery);
+      document.getElementById("HomepageNavigation-SearchBar")!.setAttribute("value", searchQuery);
       };
     </script>
   </form>
