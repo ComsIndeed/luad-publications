@@ -315,11 +315,15 @@ body
         position: absolute
         background-color: hsla(0, 0%, 3%, 40%)
         color: white
-        padding: 0.75em
+        padding: 0.5em
         border: none
         color: white
         bottom: 2em
         right: 2em
+        text-decoration: none
+        @include forScreens($p)
+          bottom: 1.5em
+          font-size: 0.75em
 
     .HeaderScreen_Main.expand
       width: 100%
@@ -356,17 +360,17 @@ body
     gap: 0.5em
 
     .NavigationLink, .NavigationButton
+      text-decoration: none
       display: inline-block
       width: min-content
       @include hoverInteractive
       @include forScreens($p)
-        font-size: 0.75em
+        font-size: 0.8em
 
     .NavigationButton
       background: none
 
     .NavigationButton.false, .NavigationButton.selected
-      font-size: 1.075em
       position: relative
       opacity: 0.75
       transition: opacity 0.25s

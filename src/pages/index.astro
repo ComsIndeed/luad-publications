@@ -6,8 +6,29 @@ import "../main.sass";
 // import LUADIconSmall from "../Assets/luad-small.webp";
 // import HomepageNavigation from "../components/homepageNavigation.astro";
 import HomepageLayout from "../layouts/homepage.astro";
+import NotFoundImage from "../Assets/notFound.webp";
+import { Icon } from "astro-icon/components";
 ---
 
 <HomepageLayout>
+  <template id="ContentCard-Template">
+    <a href="" class="ContentCard animate__animated animate__fadeIn">
+      <img
+        class="ContentCard-thumbnail"
+        width={360}
+        height={270}
+        src={NotFoundImage.src}
+        alt={`Thumbnail for the article: HTML Template  `}
+      />
+      <div class="ContentCard-text">
+        <span class="ContentCard-author">
+          <Icon class="ContentCard-author-icon" name="mdi:user" />
+          <p class="ContentCard-author-text"></p>
+        </span>
+        <h3 class="ContentCard-title"></h3>
+        <p class="ContentCard-body animate__animated animate__fadeInUp"></p>
+      </div>
+    </a>
+  </template>
   <ContentList selectedCategory="all" />
 </HomepageLayout>

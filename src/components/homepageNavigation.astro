@@ -71,7 +71,16 @@ const categoryOptions = ["all", ...categories];
       name="search"
       id="HomepageNavigation-SearchBar"
       class="SearchBar-Input"
-      placeholder="Search LUAD"
-    />
+    placeholder="Search LUAD"
+  />
+    <script>
+      const queryString = window.location.search;
+      const urlParams = new URLSearchParams(queryString);
+      const searchQuery = urlParams.get("search");
+      
+      if (searchQuery != null) {
+      document.getElementById("HomepageNavigation-SearchBar").setAttribute("value", searchQuery);
+      };
+    </script>
   </form>
 </div>

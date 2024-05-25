@@ -9,6 +9,13 @@ import type { LuadDocumentObject } from "../lib/admin/interfaces/adminInterfaces
 
 const retrievedData = await getDocs(collection(db, "documents"));
 const fetchedDocuments = retrievedData.docs;
+const cachedDocuments = fetchedDocuments.map((item) => {
+  return {
+    ...item.data(),
+    id: item.id,
+  };
+});
+
 fetchedDocuments.forEach((item) => {
   const docum: LuadDocumentObject = item.data();
   docum.head?.meta?.category?.includes;
@@ -34,9 +41,8 @@ const { selectedCategory } = Astro.props;
             <a
               href={`/posts/${createSafeRoute(item.data()?.head?.title)}-${item.id}`}
               class="ContentCard animate__animated animate__fadeIn"
+              id={`ContentCard-${item.id}`}
             >
-              {/*  */}
-
               <Image
                 class="ContentCard-thumbnail"
                 width={360}
@@ -139,28 +145,100 @@ const { selectedCategory } = Astro.props;
             );
           })
     }
+    <!-- ! BACKEND, KINDA -->
     <div
       id="data-fetchedDocuments"
-      data-cached_documents={JSON.stringify(fetchedDocuments)}
+      data-cached_documents={JSON.stringify(cachedDocuments)}
     >
     </div>
     <script>
-      // Client-side script to read data from the data attribute
+      import { createSafeRoute } from "../lib/randomUtils";
+      import { sortByMatch } from "../lib/searchLib";
+      import { categories } from "../lib/config"
       document.addEventListener("DOMContentLoaded", () => {
         const dataElement = document.getElementById("data-fetchedDocuments")!;
-        const data = JSON.parse(dataElement.dataset.cached_documents!);
-        // Now you can use the data object in your client-side code
-        console.log(data);
+        const data: any[] = JSON.parse(dataElement.dataset.cached_documents!);
+
+        const queryString = window.location.search;
+        const urlParams = new URLSearchParams(queryString);
+        const searchQuery = urlParams.get("search");
+
+        if (!!searchQuery && searchQuery?.length > 0) {
+          document.querySelector(".ContentGrid")!.textContent = "";
+          const searchResults = sortByMatch(data, searchQuery);
+          // TODO DETERMINE WHY THIS IS NULL
+          const ContentCardTemplate = document.getElementById(
+            "ContentCard-Template"
+          ) as HTMLTemplateElement;
+
+          let categorizedSearchResults;
+          const firstPathParameter = window.location.pathname.split("/")[1];
+          const isPathACategory = !!categories.includes(firstPathParameter);
+          const currentCategory = isPathACategory ? firstPathParameter : "all";
+
+          if (currentCategory != "all") {          
+          categorizedSearchResults = searchResults.filter(item => item?.head?.meta?.category.includes(currentCategory));
+          } else {
+          categorizedSearchResults = searchResults;
+          };
+
+          categorizedSearchResults.forEach((documentItem) => {
+            const ContentCardTemplateClone =
+              ContentCardTemplate.content.cloneNode(true) as HTMLElement;
+
+            if (ContentCardTemplateClone.querySelector(".ContentCard")) {
+              ContentCardTemplateClone.querySelector(
+                ".ContentCard"
+              )?.setAttribute(
+                "href",
+                `/posts/${createSafeRoute(documentItem.head?.title)}-${documentItem.id}`
+              );
+            }
+            if (
+              ContentCardTemplateClone.querySelector(
+                ".ContentCard-thumbnail"
+              ) &&
+              !!documentItem?.head?.headerImage?.small
+            ) {
+              ContentCardTemplateClone.querySelector(
+                ".ContentCard-thumbnail"
+              )?.setAttribute("src", documentItem?.head?.headerImage?.small);
+            }
+            if (
+              !!ContentCardTemplateClone.querySelector(
+                ".ContentCard-author-text"
+              )
+            ) {
+              ContentCardTemplateClone.querySelector(
+                ".ContentCard-author-text"
+              )!.textContent = documentItem?.head?.author;
+            }
+            if (
+              !!ContentCardTemplateClone.querySelector(".ContentCard-title")
+            ) {
+              ContentCardTemplateClone.querySelector(
+                ".ContentCard-title"
+              )!.textContent = documentItem?.head?.title;
+            }
+            if (!!ContentCardTemplateClone.querySelector(".ContentCard-body") && !!documentItem?.body) {
+              ContentCardTemplateClone.querySelector(
+                ".ContentCard-body"
+              )!.textContent =
+                documentItem?.body
+                  .replaceAll("#", "")
+                  .replaceAll("*", "")
+                  .replaceAll("<br />", "")
+                  .substr(0, 194) + "...";
+            }
+
+            console.log("BEFORE APPEND");
+            document
+              .querySelector(".ContentGrid")
+              ?.appendChild(ContentCardTemplateClone);
+            console.log("AFTER APPEND");
+          });
+        }
       });
-
-      import { sortByMatch } from "../lib/searchLib";
-      const queryString = window.location.search;
-      const urlParams = new URLSearchParams(queryString);
-      const searchQuery = urlParams.get("search");
-
-      if (false) {
-        document.querySelector(".ContentGrid")!.textContent = "";
-      }
     </script>
   </div>
 </div>
