@@ -1,8 +1,10 @@
-# Luad Publications Website
+# LUAD Publications Website
 
 A student-made school publication site, built from scratch for my high school.
 
 Luad Publications was a personal initiative I proposed to the facilitators of our school's publications organization. The idea was to have a public-facing site where students, teachers, and parents could access school articles, editorials, and creative works. I developed the site over several months while learning React and Astro along the way, focusing on avoiding needing a back-end and using Freemium back-end services. Although the project was ultimately unused by the school, the process became a major learning milestone for me.
+
+[htttps://luad.web.app](LUAD Publications Website)
 
 ---
 
